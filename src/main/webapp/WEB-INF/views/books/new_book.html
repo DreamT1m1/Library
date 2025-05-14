@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.w3.org/1999/xhtml">
+    <title>Create new book</title>
+</head>
+<body>
+    <form accept-charset="UTF-8" th:method="POST" th:action="@{/books}" th:object="${book}">
+        <label for="title">Enter book title: </label>
+        <input id="title" type="text" th:field="*{title}">
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        <br>
+        <label for="author">Enter book author: </label>
+        <input id="author" type="text" th:field="*{author}">
+        <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+        <br>
+        <label for="year">Enter book year of publishing: </label>
+        <input id="year" type="text" th:field="*{year}">
+        <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+        <br>
+        <label for="description">Enter book description: </label>
+        <input id="description" type="text" th:field="*{description}">
+        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        <br>
+        <input type="submit" value="Create book">
+    </form>
+</body>
+</html>

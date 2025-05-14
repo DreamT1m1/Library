@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.w3.org/1999/xhtml">
+    <title>All books</title>
+</head>
+<body>
+    <div th:each="book: ${books}">
+        <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}"></a>
+    </div>
+    <br>
+    <hr>
+    <a href="books/new_book">Create new book</a>
+</body>
+</html>
