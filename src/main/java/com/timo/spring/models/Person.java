@@ -1,7 +1,7 @@
 package com.timo.spring.models;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class Person {
@@ -12,7 +12,7 @@ public class Person {
     @Size(min = 5, max = 50, message =  "Entered name must be valid size")
     private String fullName;
 
-    @NotEmpty(message = "Birth year field cannot be empty!")
+    @NotNull(message = "Birth year field cannot be empty!")
     private int birthYear;
 
     public Person(int id, String fullName, int birthYear) {
@@ -46,5 +46,10 @@ public class Person {
 
     public void setBirthYear(int birthYear) {
         this.birthYear = birthYear;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%d)", getFullName(), getBirthYear());
     }
 }

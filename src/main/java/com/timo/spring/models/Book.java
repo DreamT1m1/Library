@@ -7,23 +7,23 @@ import jakarta.validation.constraints.Size;
 public class Book {
 
     private int id;
-    private Integer user_id;
 
-    @NotEmpty
+    @NotEmpty(message = "Value cannot be empty")
     @Size(min = 3, max = 70, message = "Entered title must be valid size!")
     private String title;
-    @NotEmpty
+    @NotEmpty(message = "Value cannot be empty")
     @Size(min = 3, max = 50, message = "Entered name must be valid size!")
     private String author;
-    @NotNull
+    @NotNull(message = "Value cannot be empty")
     private int year;
-    @NotEmpty
+    @NotEmpty(message = "Value cannot be empty")
     @Size(min = 10, max = 3000, message = "Description must be at least 10 and no longer than 3000 symbols")
+    private Integer person_id;
     private String description;
 
-    public Book(int id, Integer user_id, String title, String author, int year, String description) {
+    public Book(int id, Integer person_id, String title, String author, int year, String description) {
         this.id = id;
-        this.user_id = user_id;
+        this.person_id = person_id;
         this.title = title;
         this.author = author;
         this.year = year;
@@ -41,12 +41,12 @@ public class Book {
         this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getPerson_id() {
+        return person_id;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setPerson_id(Integer person_id) {
+        this.person_id = person_id;
     }
 
     public String getTitle() {
@@ -81,4 +81,20 @@ public class Book {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s - %s (%d)",
+                getAuthor(),
+                getTitle(),
+                getYear());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Book)) {
+            return false;
+        }
+        Book book = (Book) obj;
+        return getAuthor().equals(book.getAuthor()) && getTitle().equals(book.getTitle());
+    }
 }

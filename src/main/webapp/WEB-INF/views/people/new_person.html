@@ -5,6 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-
+    <form accept-charset="UTF-8" th:method="POST" th:action="@{/people}" th:object="${person}">
+        <label for="name">Enter persons name: </label>
+        <input id="name" type="text" th:field="*{fullName}">
+        <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+        <br>
+        <label for="year">Enter persons birth year: </label>
+        <input id="year" type="text" th:field="*{birthYear}">
+        <div th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}"></div>
+        <br>
+        <input type="submit" value="Create new person">
+    </form>
 </body>
 </html>

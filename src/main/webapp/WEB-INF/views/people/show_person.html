@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Person</title>
+    </head>
+    <body>
+        <p th:text="${person.getFullName()}"></p>
+        <p th:text="${person.getBirthYear()}"></p>
+        <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit this person</a>
+        <br>
+        <hr>
+        <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+            <input type="submit" value="Delete this person">
+        </form>
+    </body>
 </html>

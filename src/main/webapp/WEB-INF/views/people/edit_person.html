@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit person</title>
 </head>
 <body>
-
+    <form accept-charset="UTF-8" th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
+        <label for="name">Change persons name: </label>
+        <input id="name" type="text" th:field="*{fullName}">
+        <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+        <br>
+        <label for="birthYear">Change persons birth year: </label>
+        <input id="birthYear" type="text" th:field="*{birthYear}">
+        <div th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}"></div>
+        <br>
+        <input type="submit" value="Edit person">
+    </form>
 </body>
 </html>

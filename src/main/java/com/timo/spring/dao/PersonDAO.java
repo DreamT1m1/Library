@@ -21,7 +21,7 @@ public class PersonDAO {
 
     public List<Person> getAllPeople() {
         return jdbcTemplate.query(
-                "SELECT * FROM person",
+                "SELECT * FROM person ORDER BY id",
                     new BeanPropertyRowMapper<>(Person.class)
         );
     }
@@ -35,13 +35,13 @@ public class PersonDAO {
     }
 
     public void addPerson(Person person) {
-        jdbcTemplate.update("INSERT INTO person(name, birthyear) VALUES (?, ?)",
+        jdbcTemplate.update("INSERT INTO person(fullname, birthyear) VALUES (?, ?)",
                 person.getFullName(),
                 person.getBirthYear());
     }
 
     public void updatePerson(int id, Person person) {
-        jdbcTemplate.update("UPDATE person SET name=?, birthyear=? WHERE id=?",
+        jdbcTemplate.update("UPDATE person SET fullname=?, birthyear=? WHERE id=?",
                 person.getFullName(),
                 person.getBirthYear(),
                 id);

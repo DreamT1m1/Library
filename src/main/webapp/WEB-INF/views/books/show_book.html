@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" xmlns:th="http://www.w3.org/1999/xhtml">
-    <title th:text="${book.getTitle()}"></title>
-</head>
-<body>
-    <p th:text="${book.getTitle()}"></p>
-    <p th:text="${book.getAuthor()}"></p>
-    <p th:text="${book.getYear()}"></p>
-    <p th:text="${book.getDescription()}"></p>
-    <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit this book</a>
-    <br>
-    <hr>
-    <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
-        <input type="submit" value="Delete this book">
-    </form>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${book.getTitle()}"></title>
+    </head>
+    <body>
+        <p th:text="${book.getTitle()}"></p>
+        <p th:text="${book.getAuthor()}"></p>
+        <p th:text="${book.getYear()}"></p>
+        <p th:text="${book.getDescription()}"></p>
+
+        <div th:if="${book.getPerson_id() == null}">
+            <br>
+            <p>This book is not taken by anyone. Who give this book to?</p>
+            <form th:method="PATCH" th:action="@{/books/{id}/set_owner(id=${book.getId()})}">
+                <label for="owner">Choose a person who give the book to:</label>
+                <select id="owner" name="personId">
+                    <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}"></option>
+                </select>
+                <input type="submit" value="Give the book to the chosen person">
+            </form>
+            <br>
+        </div>
+        <div th:unless="${book.getPerson_id() == null}">
+            <p>
+                This book is taken by:
+                <strong th:text="${person.getFullName()}"></strong>
+                 with id
+                <strong th:text="${person.getId()}"></strong>
+            </p>
+            <form th:method="PATCH" th:action="@{/books/{id}/delete_owner(id=${book.getId()})}">
+                <input type="submit" value="Take the book from the person">
+            </form>
+        </div>
+
+        <hr>
+        <form th:action="@{/books}">
+            <input type="submit" value="Go to the books list">
+        </form>
+        <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+            <input type="submit" value="Delete this book">
+        </form>
+        <form th:method="PATCH" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+            <input type="submit" value="Edit this book">
+        </form>
+    </body>
 </html>
