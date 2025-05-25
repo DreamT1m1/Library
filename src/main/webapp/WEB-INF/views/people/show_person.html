@@ -10,6 +10,22 @@
         <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit this person</a>
         <br>
         <hr>
+
+        <div th:if="${person.getBooks().isEmpty()}">
+            <p>This person doesn't have any book yet</p>
+        </div>
+
+        <div th:unless="${person.getBooks().isEmpty()}">
+            <ul>
+                <li th:each="book : ${person.getBooks()}">
+                    <a th:href="@{/books/{id}(id=${book.getId()})}">
+                        <strong th:text="${book}"></strong>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <hr>
         <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
             <input type="submit" value="Delete this person">
         </form>

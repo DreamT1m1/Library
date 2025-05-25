@@ -1,29 +1,45 @@
 package com.timo.spring.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Entity
+@Table(name = "book")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @NotEmpty(message = "Value cannot be empty")
     @Size(min = 3, max = 70, message = "Entered title must be valid size!")
+    @Column(name = "title")
     private String title;
+
     @NotEmpty(message = "Value cannot be empty")
     @Size(min = 3, max = 50, message = "Entered name must be valid size!")
+    @Column(name = "author")
     private String author;
+
     @NotNull(message = "Value cannot be empty")
+    @Column(name = "year")
     private int year;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person owner;
+
     @NotEmpty(message = "Value cannot be empty")
     @Size(min = 10, max = 3000, message = "Description must be at least 10 and no longer than 3000 symbols")
-    private Integer person_id;
+    @Column(name = "description")
     private String description;
 
-    public Book(int id, Integer person_id, String title, String author, int year, String description) {
+    public Book(int id, Person owner, String title, String author, int year, String description) {
         this.id = id;
-        this.person_id = person_id;
+        this.owner = owner;
         this.title = title;
         this.author = author;
         this.year = year;
@@ -41,12 +57,12 @@ public class Book {
         this.id = id;
     }
 
-    public Integer getPerson_id() {
-        return person_id;
+    public Person getOwner() {
+        return owner;
     }
 
-    public void setPerson_id(Integer person_id) {
-        this.person_id = person_id;
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     public String getTitle() {

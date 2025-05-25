@@ -1,7 +1,7 @@
 package com.timo.spring.util;
 
-import com.timo.spring.dao.BookDAO;
 import com.timo.spring.models.Book;
+import com.timo.spring.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -12,11 +12,11 @@ import java.util.Optional;
 @Component
 public class BookValidator implements Validator {
 
-    private final BookDAO bookDAO;
+    private final BookService bookService;
 
     @Autowired
-    public BookValidator(BookDAO bookDAO) {
-        this.bookDAO = bookDAO;
+    public BookValidator(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class BookValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Book book = (Book) target;
-        Optional<Book> bookOptional = bookDAO.getBookByTitleAndAuthor(book.getTitle(), book.getAuthor());
+        Optional<Book> bookOptional = bookService.getBookByTitleAndAuthor(book.getTitle(), book.getAuthor());
 
         if (bookOptional.isPresent() && book.equals(bookOptional.get())) {
             System.out.printf("Trying to add book that already exists - %s\n", bookOptional.get());
@@ -37,7 +37,7 @@ public class BookValidator implements Validator {
 
     public void validate(String method, Object target, Errors errors) {
         Book book = (Book) target;
-        Optional<Book> bookOptional = bookDAO.getBookByTitleAndAuthor(book.getTitle(), book.getAuthor());
+        Optional<Book> bookOptional = bookService.getBookByTitleAndAuthor(book.getTitle(), book.getAuthor());
 
         switch (method) {
             case "POST":

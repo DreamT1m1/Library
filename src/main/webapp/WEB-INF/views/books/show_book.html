@@ -10,7 +10,7 @@
         <p th:text="${book.getYear()}"></p>
         <p th:text="${book.getDescription()}"></p>
 
-        <div th:if="${book.getPerson_id() == null}">
+        <div th:if="${book.getOwner() == null}">
             <br>
             <p>This book is not taken by anyone. Who give this book to?</p>
             <form th:method="PATCH" th:action="@{/books/{id}/set_owner(id=${book.getId()})}">
@@ -22,10 +22,13 @@
             </form>
             <br>
         </div>
-        <div th:unless="${book.getPerson_id() == null}">
+
+        <div th:unless="${book.getOwner() == null}">
             <p>
                 This book is taken by:
-                <strong th:text="${person.getFullName()}"></strong>
+                <a th:href="@{/people/{id}(id=${person.getId()})}">
+                    <strong th:text="${person.getFullName()}"></strong>
+                </a>
                  with id
                 <strong th:text="${person.getId()}"></strong>
             </p>
